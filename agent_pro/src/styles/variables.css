@@ -1,0 +1,23 @@
+/* Raw design tokens. Tailwind picks these up in theme.css; the cover page uses --sans directly. */
+:root {
+  --sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  --brand: #f47721;
+  --bg: #101010;
+  --bg-secondary: #181818;
+  --card: #202020;
+  --border: #303030;
+  --text: #f5f5f5;
+  --text-muted: #a0a0a0;
+
+  --sidebar-width: 18rem;
+  --sidebar-width-collapsed: 4.75rem;
+  --header-height: 4rem;
+}
+
+@media (max-height: 700px) {
+  :root {
+    --header-height: 3.5rem;
+  }
+}

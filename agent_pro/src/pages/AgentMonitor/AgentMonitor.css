@@ -1,0 +1,31 @@
+/* Dark theme for the React Flow canvas used by the supervisor diagram. */
+.agent-flow .react-flow {
+  --xy-background-color: transparent;
+  --xy-edge-stroke-default: #5a5a5a;
+  --xy-controls-button-background-color-default: #202020;
+  --xy-controls-button-background-color-hover-default: #2c2c2c;
+  --xy-controls-button-color-default: #f5f5f5;
+  --xy-controls-button-border-color-default: #303030;
+  --xy-attribution-background-color-default: transparent;
+}
+
+.agent-flow .react-flow__controls {
+  box-shadow: none;
+  border: 1px solid #303030;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.agent-flow .react-flow__node {
+  cursor: pointer;
+}
+
+/* React Flow's attribution stays visible (it is only removable with a Pro subscription). */
+.agent-flow .react-flow__attribution {
+  background: transparent;
+  font-size: 0.625rem;
+}
+
+.agent-flow .react-flow__attribution a {
+  color: #6f6f6f;
+}

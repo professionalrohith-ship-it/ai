@@ -1,0 +1,33 @@
+/* The chat is a full-height workspace: it fills the viewport under the sticky header so only the
+   message list scrolls, not the page. The padding term mirrors .app-main in styles/globals.css. */
+.chat-workspace {
+  --chat-pad-y: 4rem;
+  height: calc((100vh / var(--zf, 1)) - var(--header-height) - var(--chat-pad-y));
+  min-height: 30rem;
+}
+
+@supports (height: 100dvh) {
+  .chat-workspace {
+    height: calc((100dvh / var(--zf, 1)) - var(--header-height) - var(--chat-pad-y));
+  }
+}
+
+@media (max-width: 1023px) {
+  .chat-workspace {
+    --chat-pad-y: 3rem;
+  }
+}
+
+@media (max-height: 700px) {
+  .chat-workspace {
+    --chat-pad-y: 2.5rem;
+  }
+}
+
+/* The header stops being sticky on very short screens, so give the workspace a fixed minimum. */
+@media (max-height: 480px) {
+  .chat-workspace {
+    height: auto;
+    min-height: 26rem;
+  }
+}

@@ -1,0 +1,512 @@
+/* Full-window cover: the image is stretched to exactly the window's width and height,
+   so the whole artwork is always visible and nothing is cropped or zoomed.
+   Light glows and the button are positioned in percent of the window, so they stay
+   registered to the painted sources at every size. */
+.cover {
+  position: fixed;
+  inset: 0;
+  background-color: #100915;
+  isolation: isolate;
+  --screen: 150, 205, 255;
+  --flame: 255, 150, 40;
+}
+
+.cover-art {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+/* ---------- light layers ---------- */
+
+.cover-lights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.light,
+.logo-beam {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: opacity;
+}
+
+/* Lamp, left */
+.lamp-bloom {
+  left: 1.6%;
+  top: 33.7%;
+  width: 22%;
+  height: 33%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 196, 110, 0.55) 0%, rgba(255, 160, 60, 0.28) 24%, rgba(255, 130, 30, 0.1) 55%, transparent 100%);
+  animation: lamp-hum 7s ease-in-out infinite;
+}
+
+.lamp-spill {
+  left: 7.2%;
+  top: 46%;
+  width: 40%;
+  height: 55%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 170, 70, 0.7) 0%, rgba(255, 140, 40, 0.3) 40%, transparent 100%);
+  animation: lamp-hum 7s ease-in-out infinite;
+}
+
+.book-spill {
+  left: 13%;
+  top: 70.3%;
+  width: 28%;
+  height: 18%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 160, 60, 0.6) 0%, transparent 100%);
+  animation: lamp-hum 7s ease-in-out infinite;
+}
+
+/* Ceiling light strip */
+.ceiling-bloom {
+  left: 57.6%;
+  top: 2.8%;
+  width: 16%;
+  height: 9%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 190, 100, 0.8) 0%, rgba(255, 150, 50, 0.32) 38%, rgba(255, 130, 40, 0.1) 65%, transparent 100%);
+  animation: tube-hum 5s ease-in-out infinite;
+}
+
+.ceiling-cone {
+  left: 57.6%;
+  top: 15%;
+  width: 34%;
+  height: 44%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 175, 80, 0.55) 0%, rgba(255, 150, 60, 0.2) 45%, transparent 100%);
+  animation: tube-hum 5s ease-in-out infinite;
+}
+
+/* The tube itself: a curved bar, tilted up to the right */
+.ceiling-tube {
+  left: 57.7%;
+  top: 2.5%;
+  width: 7.6%;
+  height: 2.6%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  mix-blend-mode: screen;
+  background: linear-gradient(to right, transparent 0, rgba(255, 190, 110, 0.7) 18%, rgba(255, 225, 170, 0.9) 50%, rgba(255, 190, 110, 0.7) 82%, transparent 100%);
+  filter: blur(4px);
+  animation: tube-hum 5s ease-in-out infinite;
+}
+
+.ceiling-core {
+  left: 57.7%;
+  top: 2.5%;
+  width: 6.4%;
+  height: 1.2%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(-15deg);
+  mix-blend-mode: screen;
+  background: linear-gradient(to right, transparent 0, rgba(255, 240, 210, 0.65) 25%, rgba(255, 248, 230, 0.85) 50%, rgba(255, 240, 210, 0.65) 75%, transparent 100%);
+  filter: blur(1.5px);
+  animation: tube-hum 5s ease-in-out infinite;
+}
+
+/* Window: sunset sun, haze, castle windows, lanterns */
+.sun-bloom {
+  left: 90.2%;
+  top: 34.2%;
+  width: 30%;
+  height: 46%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 205, 140, 0.55) 0%, rgba(255, 160, 90, 0.25) 26%, rgba(255, 120, 80, 0.08) 58%, transparent 100%);
+  animation: sun-pulse 9s ease-in-out infinite;
+}
+
+.sun-haze {
+  left: 84%;
+  top: 29%;
+  width: 36%;
+  height: 54%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 170, 110, 0.4) 0%, rgba(255, 130, 100, 0.14) 55%, transparent 100%);
+  animation: sun-pulse 9s ease-in-out infinite;
+}
+
+.window-rim {
+  left: 78.8%;
+  top: 50.8%;
+  width: 16%;
+  height: 36%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 150, 70, 0.7) 0%, rgba(255, 120, 60, 0.25) 50%, transparent 100%);
+}
+
+.castle-a,
+.castle-b,
+.castle-c,
+.castle-d,
+.castle-e,
+.lantern-a,
+.lantern-b {
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 200, 120, 0.8) 0%, rgba(255, 160, 70, 0.28) 42%, transparent 100%);
+  animation: twinkle 4.6s ease-in-out infinite;
+}
+
+.castle-a { left: 94.4%; top: 28.3%; width: 2.6%; height: 3.8%; }
+.castle-b { left: 97.7%; top: 30.1%; width: 2.6%; height: 3.8%; animation-delay: -1.2s; }
+.castle-c { left: 94.3%; top: 32.7%; width: 2.6%; height: 3.8%; animation-delay: -2.6s; }
+.castle-d { left: 93.8%; top: 27%; width: 2.2%; height: 3.2%; animation-delay: -3.4s; }
+.castle-e { left: 95.1%; top: 26.1%; width: 2.2%; height: 3.2%; animation-delay: -0.6s; }
+.lantern-a { left: 69.6%; top: 34%; width: 5%; height: 7.5%; }
+.lantern-b { left: 97.3%; top: 41.4%; width: 5%; height: 7.5%; animation-delay: -2.1s; }
+
+/* Sun on the wall poster */
+.poster-sun {
+  left: 57.8%;
+  top: 21%;
+  width: 9%;
+  height: 13%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 175, 90, 0.45) 0%, rgba(255, 140, 60, 0.16) 45%, transparent 100%);
+}
+
+/* Jack-o-lantern */
+.pumpkin-bloom {
+  left: 96%;
+  top: 66.9%;
+  width: 24%;
+  height: 36%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 190, 90, 0.8) 0%, rgba(var(--flame), 0.42) 28%, rgba(255, 110, 20, 0.14) 60%, transparent 100%);
+  animation: candle 3.4s linear infinite;
+}
+
+.pumpkin-spill {
+  left: 92%;
+  top: 75%;
+  width: 34%;
+  height: 22%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(255, 160, 50, 0.95) 0%, rgba(255, 130, 30, 0.4) 50%, transparent 100%);
+  animation: candle 3.4s linear infinite;
+}
+
+/* Bright candle core inside the pumpkin */
+.pumpkin-core {
+  left: 96.2%;
+  top: 66.5%;
+  width: 9%;
+  height: 12.5%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 232, 160, 0.7) 0%, rgba(255, 185, 70, 0.34) 45%, transparent 100%);
+  animation: candle 3.4s linear infinite;
+}
+
+/* Warm light pooling on the table and pot beside the pumpkin */
+.pumpkin-table {
+  left: 94%;
+  top: 72.8%;
+  width: 22%;
+  height: 4%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(255, 170, 60, 0.38) 0%, transparent 100%);
+  animation: candle 3.4s linear infinite;
+}
+
+/* Code monitor on the shelf */
+.monitor-glow {
+  left: 21.4%;
+  top: 49.8%;
+  width: 15%;
+  height: 22%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(120, 190, 220, 0.3) 0%, rgba(100, 170, 210, 0.1) 50%, transparent 100%);
+  animation: screen-flicker 6s steps(1, end) infinite;
+}
+
+/* Laptop screen light: cool, from behind the lid toward the characters */
+.screen-shade {
+  left: 43.3%;
+  top: 43%;
+  width: 28%;
+  height: 22%;
+  mix-blend-mode: multiply;
+  background: radial-gradient(closest-side, rgba(28, 10, 48, 0.3) 0%, rgba(28, 10, 48, 0.1) 60%, transparent 100%);
+}
+
+.screen-face-dino {
+  left: 44.9%;
+  top: 67.4%;
+  width: 42%;
+  height: 80%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(var(--screen), 0.95) 0%, rgba(var(--screen), 0.62) 22%, rgba(var(--screen), 0.3) 45%, rgba(var(--screen), 0.1) 70%, transparent 100%);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+.screen-face-dino-fill {
+  left: 43.6%;
+  top: 59%;
+  width: 28%;
+  height: 30%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(var(--screen), 0.2) 0%, rgba(var(--screen), 0.08) 55%, transparent 100%);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+.screen-face-cat {
+  left: 60.2%;
+  top: 62%;
+  width: 22%;
+  height: 32%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(var(--screen), 0.8) 0%, rgba(var(--screen), 0.35) 50%, transparent 100%);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+.screen-body {
+  left: 45.6%;
+  top: 72.3%;
+  width: 50%;
+  height: 20%;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(closest-side, rgba(var(--screen), 0.85) 0%, rgba(var(--screen), 0.3) 55%, transparent 100%);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+.screen-rim {
+  left: 53.4%;
+  top: 66.6%;
+  width: 24%;
+  height: 0.9%;
+  border-radius: 999px;
+  transform: translate(-50%, -50%) rotate(-1.8deg);
+  mix-blend-mode: screen;
+  background: linear-gradient(to right, transparent 0, rgba(220, 238, 255, 0.55) 25%, rgba(235, 246, 255, 0.8) 50%, rgba(220, 238, 255, 0.55) 75%, transparent 100%);
+  filter: blur(1.5px);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+.screen-rim-bloom {
+  left: 53.4%;
+  top: 65.4%;
+  width: 40%;
+  height: 12%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(var(--screen), 0.42) 0%, rgba(var(--screen), 0.14) 50%, transparent 100%);
+  animation: screen-breathe 5.5s ease-in-out infinite;
+}
+
+/* Backlit logo on the laptop lid */
+.logo-halo {
+  left: 51.8%;
+  top: 76.3%;
+  width: 18%;
+  height: 26%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(215, 235, 255, 0.6) 0%, rgba(var(--screen), 0.28) 28%, rgba(var(--screen), 0.07) 62%, transparent 100%);
+  animation: logo-glow 5.5s ease-in-out infinite;
+}
+
+.logo-core {
+  left: 51.8%;
+  top: 76.3%;
+  width: 6.5%;
+  height: 9.5%;
+  mix-blend-mode: screen;
+  background: radial-gradient(closest-side, rgba(240, 248, 255, 0.7) 0%, rgba(200, 228, 255, 0.3) 50%, transparent 100%);
+  animation: logo-glow 5.5s ease-in-out infinite;
+}
+
+.logo-beam {
+  left: 51.8%;
+  top: 76.3%;
+  width: 34%;
+  height: 50%;
+  mix-blend-mode: screen;
+  background: conic-gradient(from -50deg at 50% 50%, transparent 0deg, rgba(var(--screen), 0.1) 22deg, transparent 40deg, rgba(var(--screen), 0.07) 58deg, transparent 78deg, rgba(var(--screen), 0.1) 100deg, transparent 120deg, transparent 360deg);
+  filter: blur(6px);
+  -webkit-mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 0%, rgba(0, 0, 0, 0.45) 45%, transparent 100%);
+  animation: logo-glow 5.5s ease-in-out infinite;
+}
+
+@keyframes screen-breathe {
+  0%, 100% { opacity: 0.88; }
+  45% { opacity: 1; }
+  70% { opacity: 0.94; }
+}
+
+@keyframes logo-glow {
+  0%, 100% { opacity: 0.78; }
+  50% { opacity: 1; }
+}
+
+@keyframes sun-pulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@keyframes lamp-hum {
+  0%, 100% { opacity: 0.92; }
+  50% { opacity: 1; }
+}
+
+@keyframes candle {
+  0%, 100% { opacity: 0.9; }
+  12% { opacity: 1; }
+  27% { opacity: 0.84; }
+  41% { opacity: 0.97; }
+  63% { opacity: 0.88; }
+  80% { opacity: 1; }
+}
+
+@keyframes tube-hum {
+  0%, 100% { opacity: 0.88; }
+  50% { opacity: 1; }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes screen-flicker {
+  0%, 100% { opacity: 0.9; }
+  22% { opacity: 0.6; }
+  38% { opacity: 1; }
+  64% { opacity: 0.75; }
+  81% { opacity: 0.95; }
+}
+
+/* ---------- blinking: every light source has its own rhythm ---------- */
+
+@keyframes lamp-blink {
+  0%, 40%, 85%, 100% { opacity: 1; }
+  55%, 70% { opacity: 0.2; }
+}
+
+@keyframes tube-flicker {
+  0%, 20%, 70%, 78%, 100% { opacity: 1; }
+  8% { opacity: 0.2; }
+  12% { opacity: 1; }
+  16% { opacity: 0.45; }
+  74% { opacity: 0.15; }
+}
+
+@keyframes candle-strong {
+  0%, 100% { opacity: 0.55; }
+  15% { opacity: 1; }
+  30% { opacity: 0.4; }
+  45% { opacity: 0.95; }
+  60% { opacity: 0.5; }
+  78% { opacity: 1; }
+}
+
+@keyframes twinkle-strong {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 1; }
+}
+
+@keyframes sun-blink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes monitor-blink {
+  0%, 100% { opacity: 0.3; }
+  20% { opacity: 1; }
+  40% { opacity: 0.45; }
+  60% { opacity: 1; }
+  80% { opacity: 0.35; }
+}
+
+@keyframes screen-blink {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes logo-blink {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+.lamp-bloom,
+.lamp-spill,
+.book-spill {
+  animation: lamp-blink 2.8s ease-in-out infinite;
+}
+
+.ceiling-bloom,
+.ceiling-cone,
+.ceiling-tube,
+.ceiling-core {
+  animation: tube-flicker 3.6s linear infinite;
+}
+
+.pumpkin-bloom,
+.pumpkin-spill,
+.pumpkin-core,
+.pumpkin-table {
+  animation: candle-strong 1.6s linear infinite;
+}
+
+.castle-a,
+.castle-b,
+.castle-c,
+.castle-d,
+.castle-e,
+.lantern-a,
+.lantern-b {
+  animation: twinkle-strong 2.2s ease-in-out infinite;
+}
+
+.castle-a { animation-delay: 0s; }
+.castle-b { animation-delay: -0.7s; }
+.castle-c { animation-delay: -1.4s; }
+.castle-d { animation-delay: -0.35s; }
+.castle-e { animation-delay: -1.9s; }
+.lantern-a { animation-delay: -1s; animation-duration: 1.8s; }
+.lantern-b { animation-delay: -0.4s; animation-duration: 2.6s; }
+
+.sun-bloom,
+.sun-haze {
+  animation: sun-blink 5s ease-in-out infinite;
+}
+
+.poster-sun {
+  animation: sun-blink 3.4s ease-in-out infinite;
+  animation-delay: -1.2s;
+}
+
+.monitor-glow {
+  animation: monitor-blink 2.4s steps(1, end) infinite;
+}
+
+.screen-face-dino,
+.screen-face-dino-fill,
+.screen-face-cat,
+.screen-body,
+.screen-rim,
+.screen-rim-bloom {
+  animation: screen-blink 2.6s ease-in-out infinite;
+}
+
+.logo-halo,
+.logo-core,
+.logo-beam {
+  animation: logo-blink 2.6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .light,
+  .logo-beam {
+    animation: none;
+  }
+
+}

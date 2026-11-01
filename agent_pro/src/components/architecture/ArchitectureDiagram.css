@@ -1,0 +1,44 @@
+/* React Flow restyled to the CODEMIND AI theme. */
+.arch-flow.react-flow {
+  --xy-background-color: #101010;
+  --xy-background-pattern-dots-color-default: #2c2c2c;
+  --xy-edge-label-background-color-default: #181818;
+  --xy-edge-label-color-default: #a0a0a0;
+  --xy-minimap-background-color-default: #181818;
+  --xy-minimap-mask-background-color-default: rgba(16, 16, 16, 0.72);
+  --xy-minimap-node-background-color-default: #3a3a3a;
+  --xy-handle-background-color-default: #555;
+  background: #101010;
+  font-family: var(--sans);
+}
+
+.arch-flow .react-flow__minimap {
+  overflow: hidden;
+  border: 1px solid #303030;
+  border-radius: 0.625rem;
+}
+
+.arch-flow .react-flow__attribution {
+  background: transparent;
+  color: #5f5f5f;
+  font-size: 0.625rem;
+}
+
+.arch-flow .react-flow__attribution a {
+  color: #6f6f6f;
+}
+
+.arch-flow .react-flow__edge-text {
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.arch-flow .react-flow__node {
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-flow .react-flow__edge.animated path {
+    animation: none;
+  }
+}

@@ -1,0 +1,57 @@
+# ---- dependencies and virtual environments
+node_modules/
+.venv/
+venv/
+env/
+
+# ---- Python caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- build output
+dist/
+dist-ssr/
+build/
+coverage/
+*.tsbuildinfo
+
+# ---- local configuration and secrets (the .env.example files ARE committed)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# ---- local databases and data
+backend/data/
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+
+# ---- model weights and large generated artifacts
+*.gguf
+*.safetensors
+*.onnx
+*.pt
+*.pth
+*.ckpt
+
+# ---- logs and temporary files
+*.log
+*.tmp
+tmp/
+temp/
+
+# ---- editors and operating system
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+.DS_Store
+Thumbs.db
+desktop.ini

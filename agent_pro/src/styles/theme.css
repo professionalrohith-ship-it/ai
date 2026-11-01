@@ -1,0 +1,67 @@
+/* Tailwind v4 theme: exposes the tokens as utilities (bg-canvas, text-mute, border-line, ...). */
+@theme {
+  /* Laptop web app: sm/md/lg are 0 so the desktop layout always applies (no phone view). */
+  --breakpoint-sm: 0px;
+  --breakpoint-md: 0px;
+  --breakpoint-lg: 0px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --color-brand: #f47721;
+  --color-brand-hover: #ff8a3a;
+  --color-brand-deep: #d9620f;
+  --color-canvas: #101010;
+  --color-surface: #181818;
+  --color-card: #202020;
+  --color-card-hover: #262626;
+  --color-line: #303030;
+  --color-ink: #f5f5f5;
+  --color-mute: #a0a0a0;
+  --color-ok: #3ecf8e;
+  --color-warn: #f5b942;
+  --color-danger: #ef5b5b;
+  --color-info: #5aa9ff;
+
+  --font-sans: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+
+  --radius-card: 0.875rem;
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 0 1px rgba(244, 119, 33, 0.35), 0 8px 28px -8px rgba(244, 119, 33, 0.45);
+
+  --animate-fade-up: fade-up 450ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-fade-in: fade-in 300ms ease-out both;
+  --animate-pulse-dot: pulse-dot 2s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.45;
+      transform: scale(0.8);
+    }
+  }
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
